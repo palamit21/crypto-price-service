@@ -1,14 +1,20 @@
-<html lang="en">
-<head>
-  <title>Index Page</title>
-</head>
-<body>
-<form action="saveUser" method="get">
-  <table>
-    <td></td>
-    <td><input type="submit" value="Submit"></input></td>
-    </tr>
-  </table>
-</form>
-</body>
+<html xmlns:th="https://thymeleaf.org">
+<table>
+  <tr>
+  <tr>
+    <td><h4>Email ID: </h4></td>
+    <td>
+      <h4
+
+          th:text="${priceOutPutDto.currencySymbol}"></h4><h4
+
+        th:text="${priceOutPutDto.getCryptoPrice}"></h4></td>
+  </tr>
+
+  </tr>
+  <tr>
+    <td><h4>Currency Price: </h4></td>
+    <td><h4 th:text="${priceOutPutDto.currencySymbol}"></h4></td>
+  </tr>
+</table>
 </html>

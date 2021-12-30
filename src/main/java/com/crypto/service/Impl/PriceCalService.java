@@ -1,12 +1,11 @@
 package com.crypto.service.Impl;
 
-import com.crypto.Dto.MessariResponseDto;
 import com.crypto.Dto.PriceInputDto;
-import javax.servlet.http.HttpServletRequest;
-import org.springframework.http.ResponseEntity;
+import com.crypto.Dto.PriceOutPutDto;
+import java.util.Locale;
 
 public interface PriceCalService {
-  abstract ResponseEntity<MessariResponseDto> getPrice(PriceInputDto priceInputDto,
-      HttpServletRequest request);
+   PriceOutPutDto getPrice(PriceInputDto priceInputDto,
+      Locale request);
 
 }

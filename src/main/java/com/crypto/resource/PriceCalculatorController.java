@@ -1,16 +1,13 @@
 package com.crypto.resource;
 
-import com.crypto.Dto.MessariResponseDto;
 import com.crypto.Dto.PriceInputDto;
 import com.crypto.Dto.PriceOutPutDto;
 import com.crypto.service.Impl.PriceCalService;
 import java.util.ArrayList;
-import java.util.Currency;
 import java.util.List;
+import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,7 +20,7 @@ public class PriceCalculatorController {
   @Autowired
   private PriceCalService priceCalService;
 
-  @RequestMapping("/price")
+  @RequestMapping("/")
   public ModelAndView index() {
     System.out.println("User from UI =");
     ModelAndView modelAndView = new ModelAndView();
@@ -36,19 +33,10 @@ public class PriceCalculatorController {
     return modelAndView;
   }
 
-  @PostMapping(value = "/save")
-  public ModelAndView getCurrentCryptoPrice(@ModelAttribute PriceInputDto priceInputDto, Model model,
+  @PostMapping(value = "/getPrice")
+  public ModelAndView getCurrentCryptoPrice(@ModelAttribute PriceInputDto priceInputDto,
       HttpServletRequest request) {
-  ResponseEntity<MessariResponseDto> response=  priceCalService.getPrice(priceInputDto,request);;
-    Currency cur = Currency.getInstance("INR");
-    // Get and print the symbol of the currency
-    String symbol = cur.getSymbol();
-    PriceOutPutDto priceOutPutDto = PriceOutPutDto.builder()
-        .cryptoPrice(response.getBody().data.getMarket_data()
-            .getPrice_usd())
-        .currencySymbol(symbol).build();
-
-    System.out.println("currecncy Symbol =" + priceOutPutDto+""+request.getRemoteAddr());
+    PriceOutPutDto priceOutPutDto = priceCalService.getPrice(priceInputDto, request.getLocale());
     ModelAndView modelAndView = new ModelAndView();
     modelAndView.setViewName("outputdisplay");
     modelAndView.addObject("priceOutPutDto", priceOutPutDto);

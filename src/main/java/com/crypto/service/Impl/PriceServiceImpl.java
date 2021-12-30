@@ -3,6 +3,7 @@ package com.crypto.service.Impl;
 import com.crypto.Dto.GeoLocationResponseDto;
 import com.crypto.Dto.MessariResponseDto;
 import com.crypto.Dto.PriceInputDto;
+import com.crypto.Dto.PriceOutPutDto;
 import com.crypto.client.GeoLocationClient;
 import com.crypto.client.MessariClient;
 import java.util.Currency;
@@ -11,46 +12,49 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.util.StringUtils;
 
 @Service
-public class PriceServiceImpl implements PriceCalService{
+public class PriceServiceImpl implements PriceCalService {
+
   @Autowired
   private MessariClient messariClient;
   @Autowired
- private GeoLocationClient geoLocationClient;
+  private GeoLocationClient geoLocationClient;
 
   @Override
-  public ResponseEntity<MessariResponseDto> getPrice(PriceInputDto priceInputDto,
-      HttpServletRequest request) {
+  public PriceOutPutDto getPrice(PriceInputDto priceInputDto,
+      Locale request) {
+    String currencySymbol = null;
+    ResponseEntity<GeoLocationResponseDto> ipResponse = null;
 
     ResponseEntity<MessariResponseDto> response = messariClient
         .getCryptoDetails(priceInputDto.getCryptoName());
-    System.out.println("User from UI =" + priceInputDto.getCryptoName());
-    ResponseEntity<GeoLocationResponseDto> ipResponse=  geoLocationClient.getCryptoDetails("2401:4900:1f38:7592:91b6:ca6f:a301:3aeb","6dc13f5a2d39241a092421cc9fe0a1d0");
-    Locale locale = new Locale(ipResponse.getBody().getLocation().getLanguages().get(0).getCode(),ipResponse.getBody().getCountry_code());
-
-    Currency cur = Currency.getInstance(locale);
-    // Get and print the symbol of the currency
-    String symbol = cur.getSymbol();
-    System.out.println(ipResponse);
-    return response;
+    currencySymbol = getCurrencySymbol(priceInputDto, request);
+    PriceOutPutDto priceOutPutDto = PriceOutPutDto.builder()
+        .cryptoPrice(response.getBody().data.getMarket_data()
+            .getPrice_usd())
+        .currencySymbol(currencySymbol).build();
+    return priceOutPutDto;
 
   }
 
-  private static void displayCurrency(String languageCode,
-      String countryCode) {
+  private String getCurrencySymbol(PriceInputDto priceInputDto, Locale request) {
+    Currency cur;
+    ResponseEntity<GeoLocationResponseDto> ipResponse;
+    Locale locale;
+    if (StringUtils.isEmpty(priceInputDto.getIpAddress())) {
+      cur = Currency.getInstance(request);
 
-    Locale locale = new Locale(languageCode, countryCode);
-    Currency currency = Currency.getInstance(locale);
-    String code = currency.getCurrencyCode();
-    String symbol = currency.getSymbol();
+    } else {
+      ipResponse = geoLocationClient
+          .getCryptoDetails(priceInputDto.getIpAddress(), "6dc13f5a2d39241a092421cc9fe0a1d0");
+      locale = new Locale(ipResponse.getBody().getLocation().getLanguages().get(0).getCode(),
+          ipResponse.getBody().getCountry_code());
+      cur = Currency.getInstance(locale);
 
-    System.out.printf("Loading currency info for CountryCode=%s,LanguageCode=%s",
-        countryCode, languageCode);
-    System.out.println();
-    System.out.printf("Currency Code=%s, Symbol=%s",code, symbol );
 
-    System.out.println();
-    System.out.println();
+    }
+    return cur.getSymbol();
   }
 }

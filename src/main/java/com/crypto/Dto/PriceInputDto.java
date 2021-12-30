@@ -1,4 +1,4 @@
-package com.crypto.resource.Dto;
+package com.crypto.Dto;
 
 import lombok.Builder;
 import lombok.Data;
@@ -8,6 +8,7 @@ import lombok.Data;
 public class PriceInputDto {
   private String CryptoName;
   private String ipAddress;
+ // private String CryptoName;
 
 
 }

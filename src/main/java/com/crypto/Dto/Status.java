@@ -1,4 +1,4 @@
-package com.crypto.resource.Dto;
+package com.crypto.Dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import java.util.Date;

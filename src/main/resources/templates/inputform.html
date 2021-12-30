@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org">
+<head>
+  <meta charset="ISO-8859-1">
+  <title>Codebun</title>
+</head>
+<body style="background-color: #f0f4c3">
+<form th:action="@{/save}" th:object="${priceInputDto}" method="post">
+  <table align="center">
+    <tr><td>Name :</td><td><input type="text" name="ipAddress"></td></tr>
+    <tr><td>Favourite Games :</td>
+      <td><select name="CryptoName">
+        <option disabled>Please select values</option>
+        <option th:each="item : ${list}" th:text="${item}"/>
+      </select></tr>
+    <tr><td><button type="submit">Submit</button></td><td></td></tr>
+  </table>
+</form>
+</body>
+</html>

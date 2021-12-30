@@ -1,4 +1,4 @@
-package com.crypto.resource.Dto;
+package com.crypto.Dto;
 
 import lombok.Builder;
 import lombok.Data;

@@ -13,7 +13,9 @@ public class PriceOutPutDto {
 
   public Double cryptoPrice;
 
-  public   String currencySymbol;
+  public String currencySymbol;
+
+  public String currencyName;
 
 
 }

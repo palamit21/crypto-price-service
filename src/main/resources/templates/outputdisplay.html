@@ -5,12 +5,27 @@
   <title>Codebun</title>
 </head>
 <body style="background-color: #f0f4c3">
-<form th:action="@{/save}" th:object=${person}>
+<form th:action="@{/}" th:object=${person}>
   <div style="font-size: large;" align="center" th:text=${getdata}></div>
-  <div align="center" >
-    <h3 align="center">current unit price is</h3>
-    <span> <span th:text="${priceOutPutDto.currencySymbol}"></span>
-     &nbsp; <span th:text="${priceOutPutDto.getCryptoPrice}"></span></span> </span><br>
+  <div align="center">
+    <tr>
+      <td>
+            <span>
+              <b>current unit price of
+      <td th:text="${priceOutPutDto.currencyName}"/> is
+    </tr>
+    <br><br>
+    </span>
+    </td>
+    </tr>
+    <tr>
+      <td th:text="${priceOutPutDto.currencySymbol}"/>
+      <td th:text="${priceOutPutDto.getCryptoPrice}"/>
+      <br>
+    </tr>
+    <br>
+    <button type="Click Me">click here to get price for new crypto</button>
+    <br>
   </div>
 </form>
 </body>

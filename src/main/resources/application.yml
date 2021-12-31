@@ -1,0 +1,7 @@
+currency-api:
+  key: 341c83182308440b4cebd957
+
+geo-api:
+  key: 6dc13f5a2d39241a092421cc9fe0a1d0
+
+crypto-list: XRP, BTC, ETH,BNB,SOL,ADA,LUNA,DOT,UNI,WBTC,CRO,MATIC

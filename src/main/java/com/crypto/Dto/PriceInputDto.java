@@ -8,7 +8,5 @@ import lombok.Data;
 public class PriceInputDto {
   private String CryptoName;
   private String ipAddress;
- // private String CryptoName;
-
 
 }

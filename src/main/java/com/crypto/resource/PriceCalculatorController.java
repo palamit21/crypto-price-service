@@ -5,9 +5,9 @@ import com.crypto.Dto.PriceOutPutDto;
 import com.crypto.service.Impl.PriceCalService;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,16 +20,15 @@ public class PriceCalculatorController {
   @Autowired
   private PriceCalService priceCalService;
 
+  @Value("#{'${crypto-list}'.split(',')}")
+  private List<String> cryptoList;
+
   @RequestMapping("/")
   public ModelAndView index() {
-    System.out.println("User from UI =");
-    ModelAndView modelAndView = new ModelAndView();
-    List<String> list = new ArrayList<>();
-    list.add("BTC");
-    list.add("XRP");
 
+    ModelAndView modelAndView = new ModelAndView();
     modelAndView.setViewName("inputform");
-    modelAndView.addObject("list", list);
+    modelAndView.addObject("list", cryptoList);
     return modelAndView;
   }
 

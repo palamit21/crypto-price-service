@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-@FeignClient(name = "payload-api",
-    contextId = "payload",
+@FeignClient(name = "conversion-api",
+    contextId = "conversionapi",
     url = "https://data.messari.io/api/v1/assets")
 @Component
 public interface MessariClient {

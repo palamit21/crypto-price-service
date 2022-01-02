@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@FeignClient(name = "payload-api",
+@FeignClient(name = "geolocation-api",
     contextId = "ipaddress",
     url = "http://api.ipstack.com/")
 @Component

@@ -2,7 +2,9 @@ package com.crypto;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 
+@EnableFeignClients( {"com.crypto.client", "com.crypto"})
 @SpringBootApplication
 public class CryptoPriceServiceApplication {
 

@@ -2,17 +2,17 @@
 <html xmlns:th="www.thymeleaf.org">
 <head>
   <meta charset="ISO-8859-1">
-  <title>Codebun</title>
+  <title>Crypto Service</title>
 </head>
 <body style="background-color: #f0f4c3">
 <form th:action="@{/getPrice}" th:object="${priceInputDto}" method="post">
   <table align="center">
-    <tr><td>IpAddress:</td><td><input type="text" name="ipAddress"></td></tr>
     <tr><td>select Crypto :</td>
       <td><select name="CryptoName">
         <option disabled>Please select values</option>
         <option th:each="item : ${list}" th:text="${item}"/>
       </select></tr>
+    <tr><td>IpAddress:</td><td><input type="text" name="ipAddress"> &nbsp;Optional</td></tr>
     <tr><td><button type="submit">Submit</button></td><td></td></tr>
   </table>
 </form>

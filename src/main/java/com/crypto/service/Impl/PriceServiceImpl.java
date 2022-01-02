@@ -39,7 +39,7 @@ public class PriceServiceImpl implements PriceCalService {
     Currency currencySymbol = null;
     ResponseEntity<GeoLocationResponseDto> ipResponse = null;
     CompletableFuture<CurrencyConversionDto> conversionResponse = null;
-    PriceOutPutDtoBuilder priceOutPutDto=PriceOutPutDto.builder();
+    PriceOutPutDtoBuilder priceOutPutDto = PriceOutPutDto.builder();
     try {
       conversionResponse = executeConversionAPi();
       ResponseEntity<MessariResponseDto> response = messariClient
@@ -51,15 +51,15 @@ public class PriceServiceImpl implements PriceCalService {
       double priceFromApi = response.getBody().data.getMarket_data()
           .getPrice_usd();
       Double finalPrice = priceFromApi * Double.valueOf(conversionRates);
-       priceOutPutDto
+      priceOutPutDto
           .cryptoPrice(Double.valueOf(df.format(finalPrice)))
-          .currencySymbol(currencySymbol.getSymbol()).currencyName(priceInputDto.getCryptoName()).build();
+          .currencySymbol(currencySymbol.getSymbol()).currencyName(priceInputDto.getCryptoName())
+          .build();
     } catch (ExecutionException e) {
       e.printStackTrace();
     } catch (InterruptedException e) {
       e.printStackTrace();
     }
-
 
     return priceOutPutDto.build();
 
@@ -94,9 +94,11 @@ public class PriceServiceImpl implements PriceCalService {
   @Async("asyncExecutor")
   public CompletableFuture<CurrencyConversionDto> executeConversionAPi()
       throws InterruptedException {
-    ResponseEntity<CurrencyConversionDto> conversionResponse = currencyClient
-        .getCurrencyConversion();
+    return CompletableFuture.supplyAsync(() -> {
+      ResponseEntity<CurrencyConversionDto> conversionResponse = currencyClient
+          .getCurrencyConversion();
+      return conversionResponse.getBody();
+    });
 
-    return CompletableFuture.completedFuture(conversionResponse.getBody());
   }
 }

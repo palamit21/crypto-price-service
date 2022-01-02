@@ -22,7 +22,11 @@ public class PriceCalculatorController {
 
   @Value("#{'${crypto-list}'.split(',')}")
   private List<String> cryptoList;
-
+  /**
+   * (This method is returning crypto list for landing page.
+   * @param
+   * @return inputfrom view
+   */
   @RequestMapping("/")
   public ModelAndView index() {
 
@@ -31,7 +35,13 @@ public class PriceCalculatorController {
     modelAndView.addObject("list", cryptoList);
     return modelAndView;
   }
-
+  /**
+   * (This method will take the priceinputDto and HttpServlet request.
+   * @param (HttpServletRequest)  (request)
+   * @param (PriceInputDto) (priceInputDto)
+   * @return (outputdisplay) (view)
+   * @return (PriceOutPutDto) (priceOutPutDto)
+   */
   @PostMapping(value = "/getPrice")
   public ModelAndView getCurrentCryptoPrice(@ModelAttribute PriceInputDto priceInputDto,
       HttpServletRequest request) {
